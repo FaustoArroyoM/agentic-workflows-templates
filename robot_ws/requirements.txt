@@ -1,0 +1,4 @@
+#   ROS2 packages (rclpy, sensor_msgs, cv_bridge, vision_msgs, ...) do NOT go
+#   here. Declare them in each package's package.xml and install them with
+#   rosdep (see README) to keep ROS deps consistent across machines.
+
