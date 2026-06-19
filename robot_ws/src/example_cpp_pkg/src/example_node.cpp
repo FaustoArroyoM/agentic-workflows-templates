@@ -7,7 +7,7 @@
 // HOW TO MAKE YOUR OWN C++ NODE FROM THIS:
 //   1. Copy this file:  src/my_node.cpp
 //   2. Rename the class and the string in Node("...").
-//   3. Change the topic names + message types to the ones in Claude.md.
+//   3. Change the topic names + message types to the ones in AGENTS.md.
 //   4. In CMakeLists.txt add:
 //        add_executable(my_node src/my_node.cpp)
 //        ament_target_dependencies(my_node rclcpp std_msgs)

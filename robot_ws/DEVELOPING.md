@@ -1,6 +1,6 @@
 # DEVELOPING — how to build on these templates
 
-For teammates who have **never used ROS2**. Read [../Claude.md](../Claude.md) once
+For teammates who have **never used ROS2**. Read [../AGENTS.md](../AGENTS.md) once
 for the big picture (the mission + the agreed topic map), then use this for the
 day-to-day. [README.md](README.md) covers install + how to run.
 
@@ -14,7 +14,7 @@ day-to-day. [README.md](README.md) covers install + how to run.
   *publishes* messages on a topic, other nodes *subscribe* to it. Think shared
   chat channels.
 - The **contract** is just `(topic name, message type)`. As long as everyone
-  uses the names in Claude.md's topic map, your node and mine connect at runtime
+  uses the names in AGENTS.md's topic map, your node and mine connect at runtime
   with zero shared code.
 - A **package** is a folder of related nodes (one per person/area keeps us out of
   each other's way). A **launch file** starts many nodes at once.
@@ -38,7 +38,7 @@ ros2 run <your_pkg> <your_node>  # run just yours
 ### Make a new node (Python)
 1. Copy `src/example_py_pkg/example_py_pkg/example_node.py` → `my_node.py`.
 2. Rename the class and the `super().__init__('...')` name.
-3. Change the topics + message types to the ones in Claude.md.
+3. Change the topics + message types to the ones in AGENTS.md.
 4. Register it in `src/example_py_pkg/setup.py` under `console_scripts`:
    `'my_node = example_py_pkg.my_node:main',`
 5. `./build.sh && source install/setup.bash`, then `ros2 run example_py_pkg my_node`.
@@ -51,6 +51,28 @@ ros2 run <your_pkg> <your_node>  # run just yours
    `ament_target_dependencies(my_node rclcpp std_msgs)` +
    `install(TARGETS my_node DESTINATION lib/${PROJECT_NAME})`.
 4. `./build.sh && source install/setup.bash`, then `ros2 run example_cpp_pkg my_node`.
+
+### Make a new node (C)
+C uses **rclc** — the same library micro-ROS runs on microcontrollers, but
+compiled for Linux. The build system is identical to C++ (`ament_cmake`).
+
+First, install the C client library (not in the default desktop install):
+```bash
+sudo apt install ros-humble-rclc
+```
+Then:
+1. Copy `src/example_c_pkg/src/example_node.c` → `my_node.c`.
+2. Change the node name string in `rclc_node_init_default()`.
+3. Change topics + message types to the ones in AGENTS.md.
+4. In `src/example_c_pkg/CMakeLists.txt` add:
+   `add_executable(my_node src/my_node.c)` +
+   `ament_target_dependencies(my_node rcl rclc std_msgs)` +
+   `install(TARGETS my_node DESTINATION lib/${PROJECT_NAME})`.
+5. `./build.sh && source install/setup.bash`, then `ros2 run example_c_pkg my_node`.
+
+> **Key difference from C++:** rclc has no classes — state lives in globals,
+> callbacks are plain functions, and you wire everything into an **executor**
+> manually. The topic/message contract with the rest of the team is identical.
 
 ### Make a whole new package (your own area)
 ```bash
@@ -154,8 +176,8 @@ cd src && git clone <repo-url>
 
 - **One package per person/area.** Don't edit someone else's node — write a new
   one that subscribes to their topic.
-- **Don't rename a topic** from Claude.md's map. Need a new topic? Add it to the
-  map in Claude.md and tell the team first.
+- **Don't rename a topic** from AGENTS.md's map. Need a new topic? Add it to the
+  map in AGENTS.md and tell the team first.
 - **Keep callbacks fast** — no `sleep()` / blocking I/O inside a subscriber
   callback. Use a timer for periodic work.
 - **`ros2 interface show <type>` before you code** against a message — the field
