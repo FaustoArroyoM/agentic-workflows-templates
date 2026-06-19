@@ -17,6 +17,13 @@ It is not the place for design detail — that goes in the docs below.
 
 Keep every doc **lean** — add detail when it becomes real, not before.
 
+## Ownership — who touches what
+
+**One area per person.** Claim an area, build in your own package/module, and don't edit someone else's. If you need something from another area, consume its output — don't reach into their code.
+
+- Claim your area in the Components table in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+- If two people need to touch the same thing, talk first.
+
 ## If you're working here with an AI assistant
 
 This file (`AGENTS.md`, at the repo root) is the single shared source of truth —
