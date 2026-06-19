@@ -4,9 +4,12 @@
 
 | Path | What it is |
 |---|---|
+| [AGENTS.md](AGENTS.md) | **Start here** — how we work together + where each doc lives. (Claude Code loads it via `.claude/CLAUDE.md`, which imports it.) |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | What we're building + how the pieces fit — the shared design. |
+| [docs/DECISIONS.md](docs/DECISIONS.md) | Append-only log of decisions & changes — the *why*. |
+| [docs/HOW_TO_ROS2.md](docs/HOW_TO_ROS2.md) | Working with the ROS2 starter templates — **start here if you're new to ROS2.** |
 | [robot_ws/](robot_ws/) | The ROS2 (Humble) workspace — all robot code lives here. |
 | [robot_ws/README.md](robot_ws/README.md) | Install, build, and run the system. |
-| [robot_ws/DEVELOPING.md](robot_ws/DEVELOPING.md) | How to write your own nodes + manage dependencies — **start here if you're new to ROS2.** |
 
 ## Quick start
 

@@ -1,21 +1,28 @@
-# DEVELOPING — how to build on these templates
+# HOW_TO_ROS2 — building on the ROS2 starter templates
 
-For teammates who have **never used ROS2**. Read [../AGENTS.md](../AGENTS.md) once
-for the big picture (the mission + the agreed topic map), then use this for the
-day-to-day. [README.md](README.md) covers install + how to run.
+For teammates who have **never used ROS2.** The repo ships a ROS2 (Humble)
+workspace under [robot_ws/](../robot_ws/) with example packages to copy from — a
+scaffold, not a final decision. This guide is the day-to-day for working in it.
+
+Read [AGENTS.md](../AGENTS.md) once for how we work together and
+[ARCHITECTURE.md](ARCHITECTURE.md) for the current design.
+[robot_ws/README.md](../robot_ws/README.md) covers install + how to run.
+
+> All commands below are run from the `robot_ws/` workspace root; paths are
+> relative to it.
 
 ---
 
 ## The mental model (2 minutes)
 
-- A **node** is one small program that does one job (read the camera, run YOLO,
+- A **node** is one small program that does one job (read the camera, run a model,
   drive the motors…).
 - Nodes never import each other. They talk over named **topics** — a node
   *publishes* messages on a topic, other nodes *subscribe* to it. Think shared
   chat channels.
-- The **contract** is just `(topic name, message type)`. As long as everyone
-  uses the names in AGENTS.md's topic map, your node and mine connect at runtime
-  with zero shared code.
+- The **contract** is just `(topic name, message type)`. As long as everyone uses
+  the names agreed in [ARCHITECTURE.md](ARCHITECTURE.md), your node and mine
+  connect at runtime with zero shared code.
 - A **package** is a folder of related nodes (one per person/area keeps us out of
   each other's way). A **launch file** starts many nodes at once.
 
@@ -38,7 +45,7 @@ ros2 run <your_pkg> <your_node>  # run just yours
 ### Make a new node (Python)
 1. Copy `src/example_py_pkg/example_py_pkg/example_node.py` → `my_node.py`.
 2. Rename the class and the `super().__init__('...')` name.
-3. Change the topics + message types to the ones in AGENTS.md.
+3. Change the topics + message types to the ones in [ARCHITECTURE.md](ARCHITECTURE.md).
 4. Register it in `src/example_py_pkg/setup.py` under `console_scripts`:
    `'my_node = example_py_pkg.my_node:main',`
 5. `./build.sh && source install/setup.bash`, then `ros2 run example_py_pkg my_node`.
@@ -63,7 +70,7 @@ sudo apt install ros-humble-rclc
 Then:
 1. Copy `src/example_c_pkg/src/example_node.c` → `my_node.c`.
 2. Change the node name string in `rclc_node_init_default()`.
-3. Change topics + message types to the ones in AGENTS.md.
+3. Change topics + message types to the ones in [ARCHITECTURE.md](ARCHITECTURE.md).
 4. In `src/example_c_pkg/CMakeLists.txt` add:
    `add_executable(my_node src/my_node.c)` +
    `ament_target_dependencies(my_node rcl rclc std_msgs)` +
@@ -135,7 +142,7 @@ and gets everything — no guessing.
 
 ### 2. Pure-Python libraries → `requirements.txt`
 Things on PyPI that are NOT ROS packages — e.g. `ultralytics` (YOLO). Add them to
-[requirements.txt](requirements.txt) and `pip install -r requirements.txt`. See
+[requirements.txt](../robot_ws/requirements.txt) and `pip install -r requirements.txt`. See
 the policy at the top of that file (add when you use it, don't pin until it
 breaks).
 
@@ -176,8 +183,8 @@ cd src && git clone <repo-url>
 
 - **One package per person/area.** Don't edit someone else's node — write a new
   one that subscribes to their topic.
-- **Don't rename a topic** from AGENTS.md's map. Need a new topic? Add it to the
-  map in AGENTS.md and tell the team first.
+- **Don't rename a topic** from the [ARCHITECTURE.md](ARCHITECTURE.md) map. Need a new topic? Add it to the
+  map in ARCHITECTURE.md and tell the team first.
 - **Keep callbacks fast** — no `sleep()` / blocking I/O inside a subscriber
   callback. Use a timer for periodic work.
 - **`ros2 interface show <type>` before you code** against a message — the field

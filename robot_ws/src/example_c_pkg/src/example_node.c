@@ -8,7 +8,7 @@
 // HOW TO MAKE YOUR OWN C NODE FROM THIS:
 //   1. Copy this file:  src/my_node.c
 //   2. Change the string in rclc_node_init_default() to your node name.
-//   3. Change the topic names + message types to the ones in AGENTS.md.
+//   3. Change the topic names + message types to the ones in docs/ARCHITECTURE.md.
 //      (search ROSIDL_GET_MSG_TYPE_SUPPORT for how to swap message types)
 //   4. In CMakeLists.txt add:
 //        add_executable(my_node src/my_node.c)

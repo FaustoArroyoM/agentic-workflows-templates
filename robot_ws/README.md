@@ -3,10 +3,10 @@
 A clean ROS2 (Humble) workspace. It ships **two example packages** showing how to
 add your own code — one **Python**, one **C++** — plus a **bringup** package that
 launches everything at once. Copy the example for your language, wire it to the
-topics in [../Claude.md](../Claude.md), and go.
+interfaces in [../docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md), and go.
 
-- New to ROS2? Read [DEVELOPING.md](DEVELOPING.md) — it's written for you.
-- The big picture + the agreed topic map live in [../Claude.md](../Claude.md).
+- New to ROS2? Read [../docs/HOW_TO_ROS2.md](../docs/HOW_TO_ROS2.md) — it's written for you.
+- The design + agreed interfaces live in [../docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md); how we work together is in [../AGENTS.md](../AGENTS.md).
 
 > **One-liner mental model:** nodes don't import each other; they *publish* /
 > *subscribe* to named **topics**. Keep the topic names and the pieces connect at
@@ -66,7 +66,6 @@ robot_ws/
 ├── build.sh                       ← one-command build
 ├── requirements.txt               ← pip dependencies (policy inside)
 ├── README.md                      ← you are here (install + run)
-├── DEVELOPING.md                  ← how to write nodes + manage deps
 └── src/
     ├── example_py_pkg/            ← EXAMPLE Python package (ament_python)
     │   ├── setup.py               ←   register nodes here (console_scripts)
@@ -90,7 +89,7 @@ register it (Python: `setup.py`; C++: `CMakeLists.txt`), rebuild, run. Then add 
 to `robot_bringup/launch/bringup.launch.py` so it starts with everything else.
 
 Full step-by-step (both languages, plus making a brand-new package) is in
-[DEVELOPING.md](DEVELOPING.md).
+[../docs/HOW_TO_ROS2.md](../docs/HOW_TO_ROS2.md).
 
 ---
 
@@ -103,7 +102,7 @@ Full step-by-step (both languages, plus making a brand-new package) is in
 - Don't pre-add hardware SDKs or pin versions before we need them.
 
 The reasoning, the venv caveat, and third-party/C++ libs are all in
-[DEVELOPING.md → Dependencies](DEVELOPING.md#dependencies--how-we-manage-them).
+[../docs/HOW_TO_ROS2.md → Dependencies](../docs/HOW_TO_ROS2.md#dependencies--how-we-manage-them).
 
 ---
 
