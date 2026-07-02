@@ -1,54 +1,79 @@
-# AGENTS.md — read this first
+# AGENTS.md - shared agent hub
 
-Entry point for anyone working in this repo. This file is deliberately short and kept lean: it says
-*where each kind of information lives* and *how to work here without colliding*.
-It is not the place for design detail — that goes in the docs below.
+Entry point for people and AI agents working in this repo. Keep this file lean:
+it should say where information lives, what must be read before coding, and how
+to avoid collisions. Detailed design, plans, and run notes belong in the docs
+linked below.
 
-## Where information lives — go to the right file
+## Start Here
 
-| You need… | It's in… |
+1. Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) to understand the current
+   system and ownership boundaries.
+2. Read [docs/SDD.md](docs/SDD.md) before non-trivial work. It defines the
+   spec -> plan -> experiment workflow.
+3. Check existing feature records under [docs/sdd/](docs/sdd/) before changing
+   related behavior.
+4. If the change is ROS2-specific, also read [docs/HOW_TO_ROS2.md](docs/HOW_TO_ROS2.md).
+
+## Where Information Lives
+
+| You need... | It is in... |
 |---|---|
-| How we work together (this) | `AGENTS.md` |
-| What we're building + how the pieces fit | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
-| Why a past choice was made (the history) | [docs/DECISIONS.md](docs/DECISIONS.md) |
-| Install / build / run | [robot_ws/README.md](robot_ws/README.md) |
-| Working with the ROS2 starter templates (new to ROS2? start here) | [docs/HOW_TO_ROS2.md](docs/HOW_TO_ROS2.md) |
-| Repo map + quick start | [README.md](README.md) |
+| Shared agent/person entry point | `AGENTS.md` |
+| Current system design and interfaces | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| SDD workflow and gates | [docs/SDD.md](docs/SDD.md) |
+| Feature specs, implementation plans, experiments | [docs/sdd/](docs/sdd/) |
+| Non-obvious choices and history | [docs/DECISIONS.md](docs/DECISIONS.md) |
+| Install / build / run the starter ROS2 workspace | [robot_ws/README.md](robot_ws/README.md) |
+| ROS2 starter guidance | [docs/HOW_TO_ROS2.md](docs/HOW_TO_ROS2.md) |
+| Repo map and copy instructions | [README.md](README.md) |
 
-Keep every doc **lean** — add detail when it becomes real, not before.
+Keep every doc lean. Add detail when it becomes real, not before.
 
-## Ownership — who touches what
+## Collaboration Rules
 
-**One area per person.** Claim an area, build in your own package/module, and don't edit someone else's. If you need something from another area, consume its output — don't reach into their code.
+**One area per person/agent.** Claim or create an area in the Components table in
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). If you need something from another
+area, consume its documented output or interface instead of reaching into its
+implementation.
 
-- Claim your area in the Components table in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-- If two people need to touch the same thing, talk first.
+For AI agents:
 
-## If you're working here with an AI assistant
+1. Treat the repo as shared memory. If it is not written down, it is not shared.
+2. Add alongside others' work by default. In the ROS2 scaffold, that usually means
+   a new node/package. In other projects, it means a new module behind a documented
+   interface.
+3. For a new big feature, follow [docs/SDD.md](docs/SDD.md): draft a spec, wait
+   for human approval, draft a plan, wait for human approval, implement, then
+   record the experiment or validation result.
+4. If you change the system design or interface, update
+   [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+5. If you make a non-obvious choice, add one line to
+   [docs/DECISIONS.md](docs/DECISIONS.md): `YYYY-MM-DD - area - what - why`.
+6. Do not commit, push, delete generated results, launch long external jobs, or
+   perform irreversible actions unless the user explicitly asks.
 
-This file (`AGENTS.md`, at the repo root) is the single shared source of truth —
-don't copy its contents anywhere.
+## What Counts As Big Work
 
-The repo *is* the shared memory — anything not written down isn't shared. So:
+Use the full SDD flow when a change touches two or more modules, changes a public
+interface, changes data/model/config contracts, adds a new algorithm, or affects
+more than one person/agent's area.
 
-1. **Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) before coding** so your work fits the current design.
-2. **Add alongside others' work; don't edit it.** (In the ROS2 scaffold that means a new node/package — see [docs/HOW_TO_ROS2.md](docs/HOW_TO_ROS2.md).)
-3. **Changed the design?** → update [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-4. **Made a non-obvious choice?** → one line in [docs/DECISIONS.md](docs/DECISIONS.md): `date — what — why`.
+Tiny fixes can skip specs and plans. If the reason is not obvious, log it in
+`docs/DECISIONS.md`. Pure research or tuning probes should at least record an
+experiment.
 
-## Setting up your own AI tool — what's personal vs shared
+## Personal Vs Shared Agent Config
 
-This file is committed and read by the whole team, so **nothing personal goes here.**
-Put your personal preferences in your tool's *own* config so teammates don't inherit them:
+This file is committed and shared by the whole team. Tool-specific prompt files
+should be local adapters that point here, not places where shared project truth
+is duplicated.
 
-| Tool | Your personal config lives in |
+| Tool | Recommended local adapter |
 |---|---|
-| Claude Code | `~/.claude/CLAUDE.md` (applies to all your projects, not committed) |
-| Cursor | user-level rules (in settings) |
-| Codex / other | that tool's user config |
+| Codex | Uses root `AGENTS.md` as the shared repo instructions |
+| Claude Code | `.claude/CLAUDE.md` containing only `@../AGENTS.md` |
+| Other agents | A local project prompt that says to read `AGENTS.md` first |
 
-Rule of thumb: **would a teammate on another machine need this to be true?**
-Yes → it belongs in the repo. Only you care → your personal config.
-
-- **Personal** (keep out of the repo): how you like commits handled, "don't add me as co-author", editor habits, your name.
-- **Shared** (belongs in the repo): the design + interfaces, "add alongside, don't edit others'", "log decisions".
+Personal preferences stay out of the repo: commit style, editor habits, names,
+local model/provider settings, secrets, and machine-specific paths.

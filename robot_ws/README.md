@@ -1,11 +1,11 @@
-# robot_ws — ROS2 workspace for the MTU Hackathon Robot
+# robot_ws - optional ROS2 starter workspace
 
-A clean ROS2 (Humble) workspace. It ships **two example packages** showing how to
-add your own code — one **Python**, one **C++** — plus a **bringup** package that
+A clean ROS2 Humble workspace. It ships example packages showing how to add your
+own code in **Python**, **C++**, or **C**, plus a **bringup** package that
 launches everything at once. Copy the example for your language, wire it to the
 interfaces in [../docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md), and go.
 
-- New to ROS2? Read [../docs/HOW_TO_ROS2.md](../docs/HOW_TO_ROS2.md) — it's written for you.
+- New to ROS2? Read [../docs/HOW_TO_ROS2.md](../docs/HOW_TO_ROS2.md) - it is written for you.
 - The design + agreed interfaces live in [../docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md); how we work together is in [../AGENTS.md](../AGENTS.md).
 
 > **One-liner mental model:** nodes don't import each other; they *publish* /
@@ -30,16 +30,16 @@ Everything else (message types, drivers) is declared per-package and installed b
 ## 2. Get it running
 
 ```bash
-# ── one-time per machine ──────────────────────────────────────────────────────
+# one-time per machine
 source /opt/ros/humble/setup.bash                      # source ROS2 itself
 cd robot_ws
 rosdep install --from-paths src --ignore-src -r -y      # install all ROS deps from package.xml
 pip install -r requirements.txt                         # install pip deps (mostly empty for now)
 
-# ── build ─────────────────────────────────────────────────────────────────────
+# build
 ./build.sh                                              # = colcon build --symlink-install
 
-# ── activate (do this in EVERY new terminal) ──────────────────────────────────
+# activate (do this in EVERY new terminal)
 source install/setup.bash
 ```
 
@@ -49,9 +49,10 @@ Then run the whole system, or just one node:
 # start everything via the bringup launch file
 ros2 launch robot_bringup bringup.launch.py
 
-# …or run a single node while developing yours
+# or run a single node while developing yours
 ros2 run example_py_pkg example_node       # Python
 ros2 run example_cpp_pkg example_node      # C++
+ros2 run example_c_pkg example_node        # C
 ```
 
 You should see lines like `heard: hello 7` — a node hearing its own messages.
@@ -63,17 +64,20 @@ That confirms ROS2 + the workspace are set up correctly.
 
 ```text
 robot_ws/
-├── build.sh                       ← one-command build
-├── requirements.txt               ← pip dependencies (policy inside)
-├── README.md                      ← you are here (install + run)
+├── build.sh                       <- one-command build
+├── requirements.txt               <- pip dependencies (policy inside)
+├── README.md                      <- you are here (install + run)
 └── src/
-    ├── example_py_pkg/            ← EXAMPLE Python package (ament_python)
-    │   ├── setup.py               ←   register nodes here (console_scripts)
+    ├── example_py_pkg/            <- EXAMPLE Python package (ament_python)
+    │   ├── setup.py               <-   register nodes here (console_scripts)
     │   └── example_py_pkg/example_node.py
-    ├── example_cpp_pkg/           ← EXAMPLE C++ package (ament_cmake)
-    │   ├── CMakeLists.txt         ←   register nodes here (add_executable)
+    ├── example_cpp_pkg/           <- EXAMPLE C++ package (ament_cmake)
+    │   ├── CMakeLists.txt         <-   register nodes here (add_executable)
     │   └── src/example_node.cpp
-    └── robot_bringup/             ← launches the whole system
+    ├── example_c_pkg/             <- EXAMPLE C package (ament_cmake)
+    │   ├── CMakeLists.txt         <-   register nodes here (add_executable)
+    │   └── src/example_node.c
+    └── robot_bringup/             <- launches the whole system
         └── launch/bringup.launch.py
 ```
 
@@ -85,10 +89,11 @@ what keeps us conflict-free.
 ## 4. Adding your code
 
 Copy the example node for your language, rename it, point it at the right topics,
-register it (Python: `setup.py`; C++: `CMakeLists.txt`), rebuild, run. Then add it
-to `robot_bringup/launch/bringup.launch.py` so it starts with everything else.
+register it (Python: `setup.py`; C/C++: `CMakeLists.txt`), rebuild, run. Then
+add it to `robot_bringup/launch/bringup.launch.py` so it starts with everything
+else.
 
-Full step-by-step (both languages, plus making a brand-new package) is in
+Full step-by-step (Python, C++, C, plus making a brand-new package) is in
 [../docs/HOW_TO_ROS2.md](../docs/HOW_TO_ROS2.md).
 
 ---
