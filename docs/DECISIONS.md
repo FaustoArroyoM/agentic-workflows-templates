@@ -10,6 +10,12 @@ what.
 
 ---
 
+- **2026-07-02 - repo/template - Added an adoption guide and removed stale ROS2 scaffold references.**
+  Added `docs/ADOPTING.md`, pointed the README and agent hub at it, and reframed
+  `ARCHITECTURE.md` around documentation templates rather than an absent
+  workspace. *Why:* downstream users and agents need a clear path for applying
+  the structure to an existing codebase without treating placeholders as facts.
+
 - **2026-06-25 - repo/template - Reframed the repo as an SDD collaboration template.**
   Added `docs/SDD.md`, `docs/sdd/{specs,plans,experiments}/` templates, and
   `docs/AGENT_SETUP.md`; updated `AGENTS.md`, `README.md`, and

@@ -13,7 +13,9 @@ linked below.
    spec -> plan -> experiment workflow.
 3. Check existing feature records under [docs/sdd/](docs/sdd/) before changing
    related behavior.
-4. If the change is ROS2-specific, also read [docs/HOW_TO_ROS2.md](docs/HOW_TO_ROS2.md).
+4. If you are applying this template to another repo, read
+   [docs/ADOPTING.md](docs/ADOPTING.md) and rewrite placeholders from target
+   repo facts only.
 
 ## Where Information Lives
 
@@ -21,11 +23,10 @@ linked below.
 |---|---|
 | Shared agent/person entry point | `AGENTS.md` |
 | Current system design and interfaces | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Apply this template to another repo | [docs/ADOPTING.md](docs/ADOPTING.md) |
 | SDD workflow and gates | [docs/SDD.md](docs/SDD.md) |
 | Feature specs, implementation plans, experiments | [docs/sdd/](docs/sdd/) |
 | Non-obvious choices and history | [docs/DECISIONS.md](docs/DECISIONS.md) |
-| Install / build / run the starter ROS2 workspace | [robot_ws/README.md](robot_ws/README.md) |
-| ROS2 starter guidance | [docs/HOW_TO_ROS2.md](docs/HOW_TO_ROS2.md) |
 | Repo map and copy instructions | [README.md](README.md) |
 
 Keep every doc lean. Add detail when it becomes real, not before.
@@ -40,9 +41,8 @@ implementation.
 For AI agents:
 
 1. Treat the repo as shared memory. If it is not written down, it is not shared.
-2. Add alongside others' work by default. In the ROS2 scaffold, that usually means
-   a new node/package. In other projects, it means a new module behind a documented
-   interface.
+2. Add alongside others' work by default. That usually means a new module,
+   package, or component behind a documented interface.
 3. For a new big feature, follow [docs/SDD.md](docs/SDD.md): draft a spec, wait
    for human approval, draft a plan, wait for human approval, implement, then
    record the experiment or validation result.

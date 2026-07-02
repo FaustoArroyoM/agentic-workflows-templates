@@ -4,19 +4,19 @@ The shared **what**: what this repo currently contains, how the pieces fit
 together, and which interfaces people/agents can code against. Keep it matching
 reality. The **why** behind a choice goes in [DECISIONS.md](DECISIONS.md).
 
-> **Template status:** this repo is an SDD collaboration template with a ROS2
-> starter workspace. Replace the template notes with project-specific design as
-> soon as a downstream project has real architecture.
+> **Template status:** this repo is an SDD collaboration template. Replace the
+> template notes with project-specific design as soon as a downstream project has
+> real architecture. Do not treat placeholder text as project truth.
 
 ## What This Template Provides
 
 This repo provides a copyable starting structure for multi-agent development:
 
 - a committed shared agent hub: [../AGENTS.md](../AGENTS.md)
+- an adoption guide for existing codebases: [ADOPTING.md](ADOPTING.md)
 - an SDD workflow: [SDD.md](SDD.md)
 - tracked spec, plan, and experiment records: [sdd/](sdd/)
 - a decision log: [DECISIONS.md](DECISIONS.md)
-- a ROS2 Humble starter workspace: [../robot_ws/](../robot_ws/)
 
 ## How The Pieces Fit
 
@@ -27,6 +27,9 @@ AGENTS.md
 docs/ARCHITECTURE.md
   -> current system design and ownership boundaries
 
+docs/ADOPTING.md
+  -> how to apply the template to another repo without inventing facts
+
 docs/SDD.md
   -> when to write specs, plans, and experiments
 
@@ -35,9 +38,6 @@ docs/sdd/
 
 docs/DECISIONS.md
   -> append-only history of non-obvious choices
-
-robot_ws/
-  -> optional ROS2 scaffold for projects that need it
 ```
 
 ## Interfaces And Boundaries
@@ -55,10 +55,12 @@ Until then, use these template rules:
 
 ## Codebase Today
 
-The repo ships a ROS2 Humble workspace under [robot_ws/](../robot_ws/) as a
-starter. It includes Python, C++, and C package examples plus a bringup package.
-It is a scaffold, not a required architecture decision. To build on it, see
-[HOW_TO_ROS2.md](HOW_TO_ROS2.md).
+This repo currently contains the documentation and template structure only. It
+does not ship an application, service, ROS2 workspace, frontend, or package
+scaffold.
+
+When this template is copied into a real project, replace this section with a
+short factual map of the target codebase.
 
 ## Components - Who Owns What
 
@@ -67,5 +69,6 @@ actively being built.
 
 | Area / package | Owner | Provides | Depends on | Status |
 |---|---|---|---|---|
+| `AGENTS.md` | shared | collaboration entry point | docs below | template |
+| `docs/ADOPTING.md` | shared | adoption workflow for target repos | template docs | template |
 | `docs/sdd/` | shared | spec, plan, experiment framework | `AGENTS.md` | template |
-| `robot_ws/` | shared starter | ROS2 example packages and bringup | ROS2 Humble | optional scaffold |
