@@ -13,13 +13,6 @@ venv/
 .vscode/
 
 # Personal AI tool config - never shared.
-CLAUDE.md
-CLAUDE.local.md
-CODEX.local.md
-AGENTS.local.md
-.claude/*
-.codex/*
-.agents/*
 
 # Downstream repo note: if you create local project prompts for agents, copy or
 # uncomment the relevant lines below in that repo's .gitignore.
